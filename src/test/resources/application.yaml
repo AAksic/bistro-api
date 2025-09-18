@@ -8,13 +8,12 @@ spring:
     username: bistro
     password: ${BISTRO_DB_PASSWORD}
   jpa:
+    hibernate:
+      ddl-auto: create-drop
     properties:
       hibernate:
         check_nullability: true
-  h2:
-    console:
-      enabled: true
 
 app:
   integration:
-    input-directory: src/main/resources/data
+    input-directory: src/test/resources
