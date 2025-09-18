@@ -39,7 +39,7 @@ public class ProductControllerUnitTest {
         assertEquals(1, retrievedProduct.getId());
         assertEquals("Wiener Schnitzel", retrievedProduct.getName());
         assertEquals(BigDecimal.valueOf(17.50), retrievedProduct.getPrice());
-        assertEquals(35, retrievedProduct.getQuantity());
+        assertEquals(35, retrievedProduct.getStock());
     }
 
     @Test
@@ -63,25 +63,25 @@ public class ProductControllerUnitTest {
         assertEquals(1, first.getId());
         assertEquals("Pizza", first.getName());
         assertEquals(BigDecimal.valueOf(10.25), first.getPrice());
-        assertEquals(50, first.getQuantity());
+        assertEquals(50, first.getStock());
 
         Product second = retrievedProducts.get(1);
         assertEquals(2, second.getId());
         assertEquals("Cola", second.getName());
         assertEquals(BigDecimal.valueOf(2.5), second.getPrice());
-        assertEquals(200, second.getQuantity());
+        assertEquals(200, second.getStock());
 
         Product third = retrievedProducts.get(2);
         assertEquals(3, third.getId());
-        assertEquals("Wasser", third.getName());
+        assertEquals("Water", third.getName());
         assertEquals(BigDecimal.valueOf(1.5), third.getPrice());
-        assertEquals(1000, third.getQuantity());
+        assertEquals(1000, third.getStock());
 
         Product fourth = retrievedProducts.get(3);
         assertEquals(4, fourth.getId());
         assertEquals("Chicken Tikka Masala", fourth.getName());
         assertEquals(BigDecimal.valueOf(12.75), fourth.getPrice());
-        assertEquals(15, fourth.getQuantity());
+        assertEquals(15, fourth.getStock());
     }
 
     @Test

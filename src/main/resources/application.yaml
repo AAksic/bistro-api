@@ -11,6 +11,7 @@ spring:
     properties:
       hibernate:
         check_nullability: true
+    show-sql: true
   h2:
     console:
       enabled: true

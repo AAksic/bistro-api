@@ -12,7 +12,7 @@ public class MockDataFactory {
                 .id(1)
                 .name("Wiener Schnitzel")
                 .price(BigDecimal.valueOf(17.50))
-                .quantity(35)
+                .stock(35)
                 .build();
     }
 
@@ -21,22 +21,22 @@ public class MockDataFactory {
                 Product.builder()
                         .name("Pizza")
                         .price(BigDecimal.valueOf(10.25))
-                        .quantity(50)
+                        .stock(50)
                         .build(),
                 Product.builder()
                         .name("Cola")
                         .price(BigDecimal.valueOf(2.5))
-                        .quantity(200)
+                        .stock(200)
                         .build(),
                 Product.builder()
-                        .name("Wasser")
+                        .name("Water")
                         .price(BigDecimal.valueOf(1.5))
-                        .quantity(1000)
+                        .stock(1000)
                         .build(),
                 Product.builder()
                         .name("Chicken Tikka Masala")
                         .price(BigDecimal.valueOf(12.75))
-                        .quantity(15)
+                        .stock(15)
                         .build()
         );
     }
@@ -47,25 +47,25 @@ public class MockDataFactory {
                         .id(1)
                         .name("Pizza")
                         .price(BigDecimal.valueOf(10.25))
-                        .quantity(50)
+                        .stock(50)
                         .build(),
                 Product.builder()
                         .id(2)
                         .name("Cola")
                         .price(BigDecimal.valueOf(2.5))
-                        .quantity(200)
+                        .stock(200)
                         .build(),
                 Product.builder()
                         .id(3)
-                        .name("Wasser")
+                        .name("Water")
                         .price(BigDecimal.valueOf(1.5))
-                        .quantity(1000)
+                        .stock(1000)
                         .build(),
                 Product.builder()
                         .id(4)
                         .name("Chicken Tikka Masala")
                         .price(BigDecimal.valueOf(12.75))
-                        .quantity(15)
+                        .stock(15)
                         .build()
         );
     }
