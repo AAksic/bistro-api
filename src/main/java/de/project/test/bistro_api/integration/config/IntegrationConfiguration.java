@@ -1,7 +1,7 @@
 package de.project.test.bistro_api.integration.config;
 
-import de.project.test.bistro_api.integration.handler.ProductDataCsvHandler;
-import de.project.test.bistro_api.integration.transformer.CsvLineToProductTransformer;
+import de.project.test.bistro_api.integration.handler.ProductDataHandler;
+import de.project.test.bistro_api.integration.transformer.CsvToProductTransformer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.Pollers;
 import org.springframework.integration.file.dsl.Files;
-import org.springframework.integration.file.filters.AcceptAllFileListFilter;
+import org.springframework.integration.file.filters.SimplePatternFileListFilter;
 import org.springframework.integration.file.transformer.FileToStringTransformer;
 
 import java.io.File;
@@ -18,8 +18,8 @@ import java.io.File;
 @RequiredArgsConstructor
 public class IntegrationConfiguration {
 
-    private final ProductDataCsvHandler productDataCsvHandler;
-    private final CsvLineToProductTransformer csvLineToProductTransformer;
+    private final ProductDataHandler productDataHandler;
+    private final CsvToProductTransformer csvToProductTransformer;
 
     @Value("${app.integration.input-directory}")
     private String productDataSourceDirectory;
@@ -27,13 +27,12 @@ public class IntegrationConfiguration {
     @Bean
     public IntegrationFlow loadProductDataFlow() {
         return IntegrationFlow.from(Files.inboundAdapter(new File(productDataSourceDirectory))
-                        .filter(new AcceptAllFileListFilter<>())
-                        .scanEachPoll(true),
+                                .filter(new SimplePatternFileListFilter("*.csv"))
+                                .scanEachPoll(true),
                         message -> message.poller(Pollers.fixedDelay(5000)))
                 .transform(new FileToStringTransformer())
-                .split()
-                .transform(csvLineToProductTransformer)
-                .handle(message -> System.out.println(message.getPayload()))
+                .transform(csvToProductTransformer)
+                .handle(productDataHandler)
                 .get();
     }
 }
