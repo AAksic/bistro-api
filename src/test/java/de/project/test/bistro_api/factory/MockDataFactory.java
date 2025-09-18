@@ -25,7 +25,7 @@ public class MockDataFactory {
                         .build(),
                 Product.builder()
                         .name("Cola")
-                        .price(BigDecimal.valueOf(2.50))
+                        .price(BigDecimal.valueOf(2.5))
                         .quantity(200)
                         .build(),
                 Product.builder()
@@ -34,6 +34,35 @@ public class MockDataFactory {
                         .quantity(1000)
                         .build(),
                 Product.builder()
+                        .name("Chicken Tikka Masala")
+                        .price(BigDecimal.valueOf(12.75))
+                        .quantity(15)
+                        .build()
+        );
+    }
+
+    public static List<Product> generateMockProductsWithIds() {
+        return List.of(
+                Product.builder()
+                        .id(1)
+                        .name("Pizza")
+                        .price(BigDecimal.valueOf(10.25))
+                        .quantity(50)
+                        .build(),
+                Product.builder()
+                        .id(2)
+                        .name("Cola")
+                        .price(BigDecimal.valueOf(2.5))
+                        .quantity(200)
+                        .build(),
+                Product.builder()
+                        .id(3)
+                        .name("Wasser")
+                        .price(BigDecimal.valueOf(1.5))
+                        .quantity(1000)
+                        .build(),
+                Product.builder()
+                        .id(4)
                         .name("Chicken Tikka Masala")
                         .price(BigDecimal.valueOf(12.75))
                         .quantity(15)

@@ -11,13 +11,14 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -32,7 +33,7 @@ public class ProductServiceUnitTest {
 
     @Test
     void getProductById_success() {
-        when(productRepository.findById(any()))
+        when(productRepository.findById(eq(1L)))
                 .thenReturn(Optional.of(MockDataFactory.generateMockProduct()));
 
         Product retrievedProduct = unitUnderTest.getProductById(1);
@@ -45,7 +46,7 @@ public class ProductServiceUnitTest {
 
     @Test
     void getProductById_failure_productWithIdDoesNotExist() {
-        when(productRepository.findById(any()))
+        when(productRepository.findById(eq(1L)))
                 .thenReturn(Optional.empty());
 
         assertThrows(ProductNotFoundException.class, () -> unitUnderTest.getProductById(1));
@@ -54,7 +55,7 @@ public class ProductServiceUnitTest {
     @Test
     void getAllProducts_success() {
         when(productRepository.findAll())
-                .thenReturn(MockDataFactory.generateMockProducts());
+                .thenReturn(MockDataFactory.generateMockProductsWithIds());
 
         List<Product> retrievedProducts = unitUnderTest.getAllProducts();
 
@@ -69,7 +70,7 @@ public class ProductServiceUnitTest {
         Product second = retrievedProducts.get(1);
         assertEquals(2, second.getId());
         assertEquals("Cola", second.getName());
-        assertEquals(BigDecimal.valueOf(2.50), second.getPrice());
+        assertEquals(BigDecimal.valueOf(2.5), second.getPrice());
         assertEquals(200, second.getQuantity());
 
         Product third = retrievedProducts.get(2);
@@ -83,5 +84,15 @@ public class ProductServiceUnitTest {
         assertEquals("Chicken Tikka Masala", fourth.getName());
         assertEquals(BigDecimal.valueOf(12.75), fourth.getPrice());
         assertEquals(15, fourth.getQuantity());
+    }
+
+    @Test
+    void getAllProducts_success_databaseIsEmpty() {
+        when(productRepository.findAll())
+                .thenReturn(Collections.emptyList());
+
+        List<Product> retrievedProducts = unitUnderTest.getAllProducts();
+
+        assertThat(retrievedProducts).hasSize(0);
     }
 }

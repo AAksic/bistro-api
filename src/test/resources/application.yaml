@@ -6,7 +6,7 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     url: jdbc:h2:mem:bistro-db
     username: bistro
-    password: ${BISTRO_DB_PASSWORD}
+    password: test
   jpa:
     hibernate:
       ddl-auto: create-drop

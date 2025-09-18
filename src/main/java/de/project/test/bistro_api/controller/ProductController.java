@@ -2,7 +2,7 @@ package de.project.test.bistro_api.controller;
 
 import de.project.test.bistro_api.domain.Product;
 import de.project.test.bistro_api.exception.ErrorResponse;
-import de.project.test.bistro_api.service.ProductServiceImpl;
+import de.project.test.bistro_api.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -27,7 +27,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductController {
 
-    private final ProductServiceImpl productService;
+    private final ProductService productService;
 
     @GetMapping(
             path = "/{id}",
@@ -68,7 +68,7 @@ public class ProductController {
 
 
     @GetMapping(
-            path = "/",
+            path = "",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @Operation(

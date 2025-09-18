@@ -1,55 +1,60 @@
-package de.project.test.bistro_api.service;
+package de.project.test.bistro_api.controller;
 
 import de.project.test.bistro_api.domain.Product;
 import de.project.test.bistro_api.exception.ProductNotFoundException;
 import de.project.test.bistro_api.factory.MockDataFactory;
-import de.project.test.bistro_api.repository.ProductRepository;
-import org.junit.jupiter.api.BeforeEach;
+import de.project.test.bistro_api.service.ProductService;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.when;
 
-@SpringBootTest
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class ProductServiceIntegrationTest {
+@ExtendWith(MockitoExtension.class)
+public class ProductControllerUnitTest {
 
-    @Autowired
-    private ProductRepository productRepository;
+    @Mock
+    private ProductService productService;
 
-    @Autowired
-    private ProductServiceImpl unitUnderTest;
-
-    @BeforeEach
-    void setup() {
-        productRepository.saveAll(MockDataFactory.generateMockProducts());
-    }
+    @InjectMocks
+    private ProductController unitUnderTest;
 
     @Test
     void getProductById_success() {
-        Product retrievedProduct = unitUnderTest.getProductById(1);
+        when(productService.getProductById(eq(1L)))
+                .thenReturn(MockDataFactory.generateMockProduct());
+
+        Product retrievedProduct = unitUnderTest.getProductById(1L);
 
         assertEquals(1, retrievedProduct.getId());
-        assertEquals("Pizza", retrievedProduct.getName());
-        assertEquals(BigDecimal.valueOf(10.25), retrievedProduct.getPrice());
-        assertEquals(50, retrievedProduct.getQuantity());
+        assertEquals("Wiener Schnitzel", retrievedProduct.getName());
+        assertEquals(BigDecimal.valueOf(17.50), retrievedProduct.getPrice());
+        assertEquals(35, retrievedProduct.getQuantity());
     }
 
     @Test
     void getProductById_failure_productWithIdDoesNotExist() {
-        assertThrows(ProductNotFoundException.class, () -> unitUnderTest.getProductById(500));
+        when(productService.getProductById(eq(1L)))
+                .thenThrow(ProductNotFoundException.class);
+
+        assertThrows(ProductNotFoundException.class, () -> unitUnderTest.getProductById(1L));
     }
 
     @Test
     void getAllProducts_success() {
+        when(productService.getAllProducts())
+                .thenReturn(MockDataFactory.generateMockProductsWithIds());
+
         List<Product> retrievedProducts = unitUnderTest.getAllProducts();
 
         assertThat(retrievedProducts).hasSize(4);
@@ -63,13 +68,13 @@ public class ProductServiceIntegrationTest {
         Product second = retrievedProducts.get(1);
         assertEquals(2, second.getId());
         assertEquals("Cola", second.getName());
-        assertEquals(BigDecimal.valueOf(2.50).setScale(2, RoundingMode.UNNECESSARY), second.getPrice());
+        assertEquals(BigDecimal.valueOf(2.5), second.getPrice());
         assertEquals(200, second.getQuantity());
 
         Product third = retrievedProducts.get(2);
         assertEquals(3, third.getId());
         assertEquals("Wasser", third.getName());
-        assertEquals(BigDecimal.valueOf(1.5).setScale(2, RoundingMode.UNNECESSARY), third.getPrice());
+        assertEquals(BigDecimal.valueOf(1.5), third.getPrice());
         assertEquals(1000, third.getQuantity());
 
         Product fourth = retrievedProducts.get(3);
@@ -81,7 +86,8 @@ public class ProductServiceIntegrationTest {
 
     @Test
     void getAllProducts_success_databaseIsEmpty() {
-        productRepository.deleteAll();
+        when(productService.getAllProducts())
+                .thenReturn(Collections.emptyList());
 
         List<Product> retrievedProducts = unitUnderTest.getAllProducts();
 
