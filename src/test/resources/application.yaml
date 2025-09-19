@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: bistro-api
+  datasource:
+    driverClassName: org.h2.Driver
+    database-platform: org.hibernate.dialect.H2Dialect
+    url: jdbc:h2:mem:bistro-db
+    username: bistro
+    password: test
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        check_nullability: true
+
+app:
+  integration:
+    input-directory: src/test/resources
