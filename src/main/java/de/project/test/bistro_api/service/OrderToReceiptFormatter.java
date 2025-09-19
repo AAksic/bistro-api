@@ -27,7 +27,7 @@ public class OrderToReceiptFormatter implements OrderFormatter<String> {
                 .stream()
                 .map(orderItem -> orderItem.getProduct().getPrice().multiply(BigDecimal.valueOf(orderItem.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-        BigDecimal total = subtotal.subtract(subtotal.multiply(BigDecimal.valueOf(order.getDiscount() / 100)));
+        BigDecimal total = subtotal.subtract(subtotal.multiply(BigDecimal.valueOf(order.getDiscount()).divide(BigDecimal.valueOf(100))));
 
         StringBuilder receiptBuilder = new StringBuilder();
         receiptBuilder

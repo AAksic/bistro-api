@@ -1,6 +1,5 @@
 package de.project.test.bistro_api.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name = "orderitems")
@@ -30,8 +30,8 @@ public class OrderItem {
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "order_id")
-    @JsonBackReference
-    Order order;
+    @ToString.Exclude
+    private Order order;
 
     @Column(nullable = false)
     private int quantity;

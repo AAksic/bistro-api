@@ -1,6 +1,5 @@
 package de.project.test.bistro_api.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -10,11 +9,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
 import java.util.List;
 
 @Entity
@@ -30,10 +31,12 @@ public class Order {
     private long id;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
     private List<OrderItem> items;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @Column
+    @Transient
     private int discount;
+
+    @Column(nullable = false)
+    private Instant orderDate = Instant.now();
 }

@@ -16,6 +16,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRequestMapper orderRequestMapper;
     private final OrderRepository orderRepository;
     private final OrderFormatter<String> orderFormatter;
+    private final DiscountService discountService;
 
     @Override
     @Transactional
@@ -29,6 +30,7 @@ public class OrderServiceImpl implements OrderService {
     public String getOrderById(long orderId) {
         Order retrievedOrder = orderRepository.findById(orderId)
                 .orElseThrow(() -> new OrderNotFoundException(String.format("Order with id %d does not exist", orderId)));
+        retrievedOrder = discountService.apply(retrievedOrder);
 
         return orderFormatter.format(retrievedOrder);
     }
