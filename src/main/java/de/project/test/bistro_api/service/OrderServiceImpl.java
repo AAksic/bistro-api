@@ -13,9 +13,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
+    private final OrderRequestMapper orderRequestMapper;
     private final OrderRepository orderRepository;
     private final OrderFormatter<String> orderFormatter;
-    private final OrderRequestMapper orderRequestMapper;
 
     @Override
     @Transactional

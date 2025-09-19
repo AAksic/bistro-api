@@ -17,19 +17,20 @@ public class OrderRequestMapper {
     private final ProductRepository productRepository;
 
     public Order toOrder(OrderRequest orderRequest) {
-        return Order.builder()
-                .items(this.mapItems(orderRequest.getOrderItems()))
-                .build();
+        Order createdOrder = new Order();
+        createdOrder.setItems(this.mapItems(orderRequest.getOrderItems(), createdOrder));
+        return createdOrder;
     }
 
 
-    private List<OrderItem> mapItems(List<OrderItemRequest> orderItemRequests) {
+    private List<OrderItem> mapItems(List<OrderItemRequest> orderItemRequests, Order orderToMapTo) {
         return orderItemRequests
                 .stream()
                 .map(orderItemRequest -> OrderItem
                         .builder()
                         .product(productRepository.findById(orderItemRequest.getProductId()).get())
                         .quantity(orderItemRequest.getQuantity())
+                        .order(orderToMapTo)
                         .build())
                 .toList();
     }
