@@ -1,8 +1,13 @@
 package de.project.test.bistro_api.factory;
 
+import de.project.test.bistro_api.domain.Order;
+import de.project.test.bistro_api.domain.OrderItem;
 import de.project.test.bistro_api.domain.Product;
+import de.project.test.bistro_api.dto.OrderItemRequest;
+import de.project.test.bistro_api.dto.OrderRequest;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.List;
 
 public class MockDataFactory {
@@ -68,5 +73,55 @@ public class MockDataFactory {
                         .stock(15)
                         .build()
         );
+    }
+
+    public static Order generateMockOrder() {
+        return Order.builder()
+                .id(1)
+                .orderDate(Instant.parse("2025-09-18T18:00:00.00Z"))
+                .build();
+    }
+
+    public static OrderRequest generateMockOrderRequest() {
+        return OrderRequest.builder()
+                .orderItems(List.of(
+                        OrderItemRequest.builder()
+                                .productId(1)
+                                .quantity(2)
+                                .build()
+                ))
+                .build();
+    }
+
+    public static Order generateMockOrderMappedFromRequest() {
+        return Order.builder()
+                .items(List.of(
+                        OrderItem.builder()
+                                .quantity(2)
+                                .product(Product.builder()
+                                        .id(1)
+                                        .build())
+                                .build()
+                ))
+                .build();
+    }
+
+    public static Order generateMockSavedOrder() {
+        return Order.builder()
+                .id(1)
+                .items(List.of(
+                        OrderItem.builder()
+                                .id(1)
+                                .quantity(2)
+                                .product(Product.builder()
+                                        .id(1)
+                                        .name("Pizza")
+                                        .price(BigDecimal.valueOf(12.50))
+                                        .stock(50)
+                                        .build())
+                                .build()
+                ))
+                .orderDate(Instant.parse("2025-09-18T18:00:00.00Z"))
+                .build();
     }
 }

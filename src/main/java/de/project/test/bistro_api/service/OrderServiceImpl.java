@@ -27,6 +27,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public String getOrderById(long orderId) {
         Order retrievedOrder = orderRepository.findById(orderId)
                 .orElseThrow(() -> new OrderNotFoundException(String.format("Order with id %d does not exist", orderId)));

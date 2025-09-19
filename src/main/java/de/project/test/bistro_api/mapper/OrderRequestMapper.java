@@ -17,7 +17,7 @@ public class OrderRequestMapper {
     private final ProductRepository productRepository;
 
     public Order toOrder(OrderRequest orderRequest) {
-        Order createdOrder = new Order();
+        Order createdOrder = Order.builder().build();
         createdOrder.setItems(this.mapItems(orderRequest.getOrderItems(), createdOrder));
         return createdOrder;
     }

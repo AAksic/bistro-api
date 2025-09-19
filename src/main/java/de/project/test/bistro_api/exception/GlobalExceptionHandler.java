@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler({ProductNotFoundException.class})
+    @ExceptionHandler({ProductNotFoundException.class, OrderNotFoundException.class})
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handleProductNotFoundException(ProductNotFoundException exception) {
+    public ErrorResponse handleProductNotFoundException(CustomNotFoundException exception) {
         return ErrorResponse.builder()
                 .exceptionType(exception.getClass().getSimpleName())
                 .message(exception.getMessage())

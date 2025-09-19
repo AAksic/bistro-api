@@ -12,9 +12,11 @@ import java.util.function.Predicate;
 public class DiscountService {
 
     private static final Predicate<LocalTime> IS_HAPPY_HOUR =
-            currentTime -> currentTime.isAfter(LocalTime.of(3, 0)) && currentTime.isBefore(LocalTime.of(4, 0));
+            currentTime -> currentTime.isAfter(LocalTime.of(17, 0)) && currentTime.isBefore(LocalTime.of(19, 0));
+    private static final Predicate<Long> IS_42_ND_ORDER =
+            orderId -> orderId > 0 && orderId % 42 == 0;
     private static final Predicate<Long> IS_666_TH_ORDER =
-            orderId -> orderId % 666 == 0;
+            orderId -> orderId > 0 && orderId % 666 == 0;
 
 
     public Order apply(Order eligibleOrder) {
@@ -22,6 +24,10 @@ public class DiscountService {
 
         if (IS_HAPPY_HOUR.test(orderTime)) {
             eligibleOrder.setDiscount(20);
+        }
+
+        if (IS_42_ND_ORDER.test(eligibleOrder.getId())) {
+            eligibleOrder.setDiscount(50);
         }
 
         if (IS_666_TH_ORDER.test(eligibleOrder.getId())) {
