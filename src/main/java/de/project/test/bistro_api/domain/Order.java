@@ -38,5 +38,6 @@ public class Order {
     private int discount;
 
     @Column(nullable = false)
+    @Builder.Default
     private Instant orderDate = Instant.now();
 }

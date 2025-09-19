@@ -124,4 +124,18 @@ public class MockDataFactory {
                 .orderDate(Instant.parse("2025-09-18T18:00:00.00Z"))
                 .build();
     }
+
+    public static String generateMockReceipt() {
+        return """
+                -------------------------
+                Table Nr. 10
+                -------------------------
+                2 x Pizza @ 10.0 = 20.0
+                2 x Cola @ 2.5 = 5.0
+                -------------------------
+                Subtotal: 25.0
+                Discount: 0%
+                Total: 25.0
+                """;
+    }
 }

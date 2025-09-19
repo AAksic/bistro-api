@@ -45,7 +45,11 @@ public class ProductServiceIntegrationTest {
 
     @Test
     void getProductById_failure_productWithIdDoesNotExist() {
-        assertThrows(ProductNotFoundException.class, () -> unitUnderTest.getProductById(500));
+        String expectedErrorMessage = "Product with id 500 does not exist";
+
+        ProductNotFoundException exception = assertThrows(ProductNotFoundException.class, () -> unitUnderTest.getProductById(500));
+
+        assertEquals(expectedErrorMessage, exception.getMessage());
     }
 
     @Test

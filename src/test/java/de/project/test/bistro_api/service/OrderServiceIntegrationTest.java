@@ -94,7 +94,11 @@ class OrderServiceIntegrationTest {
 
     @Test
     void getOrderById_failure_orderDoesNotExist() {
-        assertThrows(OrderNotFoundException.class, () -> unitUnderTest.getOrderById(5L));
+        String expectedErrorMessage = "Order with id 5 does not exist";
+
+        OrderNotFoundException exception = assertThrows(OrderNotFoundException.class, () -> unitUnderTest.getOrderById(5L));
+
+        assertEquals(expectedErrorMessage, exception.getMessage());
     }
 
 }

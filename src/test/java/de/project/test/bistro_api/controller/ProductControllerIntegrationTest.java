@@ -26,8 +26,8 @@ public class ProductControllerIntegrationTest {
     private ProductController unitUnderTest;
 
     @Test
-    @Sql(scripts = {"/sql/add_test_data.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-    @Sql(scripts = {"/sql/cleanup_test_data.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    @Sql(scripts = {"/sql/add_test_data_product.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = {"/sql/cleanup_test_data_product.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     void getProductById_success() {
         Product retrievedProduct = given()
                 .port(applicationPort)
@@ -59,12 +59,11 @@ public class ProductControllerIntegrationTest {
 
         assertEquals("ProductNotFoundException", errorResponse.getExceptionType());
         assertEquals("Product with id 1 does not exist", errorResponse.getMessage());
-
     }
 
     @Test
-    @Sql(scripts = {"/sql/add_test_data.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-    @Sql(scripts = {"/sql/cleanup_test_data.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    @Sql(scripts = {"/sql/add_test_data_product.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = {"/sql/cleanup_test_data_product.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     void getAllProducts_success() {
         List<Product> retrievedProducts = given()
                 .port(applicationPort)

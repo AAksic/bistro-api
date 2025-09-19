@@ -56,7 +56,8 @@ public interface OrderBaseController {
 
 
     @GetMapping(
-            path = "/{id}"
+            path = "/{id}",
+            produces = MediaType.TEXT_PLAIN_VALUE
     )
     @Operation(
             method = "GET",

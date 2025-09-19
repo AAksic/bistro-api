@@ -61,17 +61,7 @@ class OrderServiceUnitTest {
     @Test
     void getOrderById_success() {
         Order mockOrder = MockDataFactory.generateMockOrder();
-        String expectedReceipt = """
-                -------------------------
-                Table Nr. 10
-                -------------------------
-                2 x Pizza @ 10.0 = 20.0
-                2 x Cola @ 2.5 = 5.0
-                -------------------------
-                Subtotal: 25.0
-                Discount: 0%
-                Total: 25.0
-                """;
+        String expectedReceipt = MockDataFactory.generateMockReceipt();
 
         when(orderRepository.findById(1L))
                 .thenReturn(Optional.of(mockOrder));
@@ -92,11 +82,14 @@ class OrderServiceUnitTest {
     @Test
     void getOrderById_failure_orderDoesNotExist() {
         Order mockOrder = MockDataFactory.generateMockOrder();
+        String expectedErrorMessage = "Order with id 1 does not exist";
 
         when(orderRepository.findById(1L))
-                .thenThrow(OrderNotFoundException.class);
+                .thenThrow(new OrderNotFoundException(expectedErrorMessage));
 
-        assertThrows(OrderNotFoundException.class, () -> unitUnderTest.getOrderById(1L));
+        OrderNotFoundException exception = assertThrows(OrderNotFoundException.class, () -> unitUnderTest.getOrderById(1L));
+
+        assertEquals(expectedErrorMessage, exception.getMessage());
 
         verify(orderRepository, times(1)).findById(eq(1L));
         verify(discountService, never()).apply(eq(mockOrder));

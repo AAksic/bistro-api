@@ -31,8 +31,10 @@ public class ProductControllerUnitTest {
 
     @Test
     void getProductById_success() {
+        Product mockProduct = MockDataFactory.generateMockProduct();
+
         when(productService.getProductById(eq(1L)))
-                .thenReturn(MockDataFactory.generateMockProduct());
+                .thenReturn(mockProduct);
 
         Product retrievedProduct = unitUnderTest.getProductById(1L);
 
@@ -52,8 +54,10 @@ public class ProductControllerUnitTest {
 
     @Test
     void getAllProducts_success() {
+        List<Product> mockProductsWithIds = MockDataFactory.generateMockProductsWithIds();
+
         when(productService.getAllProducts())
-                .thenReturn(MockDataFactory.generateMockProductsWithIds());
+                .thenReturn(mockProductsWithIds);
 
         List<Product> retrievedProducts = unitUnderTest.getAllProducts();
 

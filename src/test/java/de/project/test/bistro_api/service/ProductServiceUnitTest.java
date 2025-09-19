@@ -33,8 +33,10 @@ public class ProductServiceUnitTest {
 
     @Test
     void getProductById_success() {
+        Product mockProduct = MockDataFactory.generateMockProduct();
+
         when(productRepository.findById(eq(1L)))
-                .thenReturn(Optional.of(MockDataFactory.generateMockProduct()));
+                .thenReturn(Optional.of(mockProduct));
 
         Product retrievedProduct = unitUnderTest.getProductById(1);
 
@@ -46,16 +48,22 @@ public class ProductServiceUnitTest {
 
     @Test
     void getProductById_failure_productWithIdDoesNotExist() {
+        String expectedErrorMessage = "Product with id 1 does not exist";
+
         when(productRepository.findById(eq(1L)))
                 .thenReturn(Optional.empty());
 
-        assertThrows(ProductNotFoundException.class, () -> unitUnderTest.getProductById(1));
+        ProductNotFoundException exception = assertThrows(ProductNotFoundException.class, () -> unitUnderTest.getProductById(1));
+
+        assertEquals(expectedErrorMessage, exception.getMessage());
     }
 
     @Test
     void getAllProducts_success() {
+        List<Product> mockProductsWithIds = MockDataFactory.generateMockProductsWithIds();
+
         when(productRepository.findAll())
-                .thenReturn(MockDataFactory.generateMockProductsWithIds());
+                .thenReturn(mockProductsWithIds);
 
         List<Product> retrievedProducts = unitUnderTest.getAllProducts();
 
