@@ -5,7 +5,7 @@ import de.project.test.bistro_api.dto.OrderRequest;
 import de.project.test.bistro_api.exception.OrderNotFoundException;
 import de.project.test.bistro_api.factory.MockDataFactory;
 import de.project.test.bistro_api.service.OrderService;
-import de.project.test.bistro_api.service.ProductService;
+import de.project.test.bistro_api.service.ProductStockUpdaterService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -27,7 +27,7 @@ class OrderControllerUnitTest {
     private OrderService orderService;
 
     @Mock
-    private ProductService productService;
+    private ProductStockUpdaterService productStockUpdaterService;
 
     @InjectMocks
     private OrderController unitUnderTest;
@@ -40,13 +40,13 @@ class OrderControllerUnitTest {
         when(orderService.placeOrder(eq(mockOrderRequest)))
                 .thenReturn(mockPlacedOrder);
         doNothing()
-                .when(productService).updateStock(eq(mockOrderRequest));
+                .when(productStockUpdaterService).updateStock(eq(mockOrderRequest));
 
         Order placedOrder = unitUnderTest.placeOrder(mockOrderRequest);
 
         assertEquals(mockPlacedOrder, placedOrder);
 
-        verify(productService, times(1)).updateStock(mockOrderRequest);
+        verify(productStockUpdaterService, times(1)).updateStock(mockOrderRequest);
     }
 
     @Test

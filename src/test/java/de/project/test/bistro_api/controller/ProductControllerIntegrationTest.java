@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ProductControllerIntegrationTest {
+class ProductControllerIntegrationTest {
 
     @LocalServerPort
     int applicationPort;
@@ -59,6 +59,19 @@ public class ProductControllerIntegrationTest {
 
         assertEquals("ProductNotFoundException", errorResponse.getExceptionType());
         assertEquals("Product with id 1 does not exist", errorResponse.getMessage());
+    }
+
+    @Test
+    void getProductById_failure_invalidProductId() {
+        given()
+                .port(applicationPort)
+                .log().all()
+                .when()
+                .get("/products/{id}", "something")
+                .then()
+                .log().all()
+                .assertThat().statusCode(HttpStatus.BAD_REQUEST.value());
+
     }
 
     @Test

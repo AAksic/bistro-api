@@ -40,7 +40,7 @@ class OrderServiceIntegrationTest {
     private DiscountService discountService;
 
     @Autowired
-    private OrderServiceImpl unitUnderTest;
+    private OrderService unitUnderTest;
 
     @Autowired
     private ProductRepository productRepository;

@@ -79,6 +79,60 @@ class OrderControllerIntegrationTest {
     }
 
     @Test
+    @Sql(scripts = {"/sql/add_test_data_product.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = {"/sql/cleanup_test_data_product.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    void placeOrder_failure_validationFailedProductDoesNotExist() {
+        OrderRequest orderRequest = OrderRequest.builder()
+                .orderItems(List.of(
+                        OrderItemRequest.builder()
+                                .productId(17L)
+                                .quantity(5)
+                                .build(),
+                        OrderItemRequest.builder()
+                                .productId(2L)
+                                .quantity(4)
+                                .build()
+                ))
+                .build();
+
+        given()
+                .port(applicationPort)
+                .body(orderRequest)
+                .contentType(ContentType.JSON)
+                .log().all()
+                .when()
+                .post("/orders")
+                .then()
+                .log().all()
+                .assertThat().statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    @Sql(scripts = {"/sql/add_test_data_product.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = {"/sql/cleanup_test_data_product.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    void placeOrder_failure_validationFailedProductIsOutOfStock() {
+        OrderRequest orderRequest = OrderRequest.builder()
+                .orderItems(List.of(
+                        OrderItemRequest.builder()
+                                .productId(1L)
+                                .quantity(74)
+                                .build()
+                ))
+                .build();
+
+        given()
+                .port(applicationPort)
+                .body(orderRequest)
+                .contentType(ContentType.JSON)
+                .log().all()
+                .when()
+                .post("/orders")
+                .then()
+                .log().all()
+                .assertThat().statusCode(HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
     void placeOrder_failure_unmappableRequest() {
         given()
                 .port(applicationPort)
@@ -127,6 +181,18 @@ class OrderControllerIntegrationTest {
 
         assertEquals("OrderNotFoundException", errorResponse.getExceptionType());
         assertEquals("Order with id 1 does not exist", errorResponse.getMessage());
+    }
+
+    @Test
+    void getOrderById_failure_invalidOrderId() {
+        given()
+                .port(applicationPort)
+                .log().all()
+                .when()
+                .get("/orders/{id}", "something")
+                .then()
+                .log().all()
+                .assertThat().statusCode(HttpStatus.BAD_REQUEST.value());
     }
 
 }

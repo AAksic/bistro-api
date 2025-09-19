@@ -20,13 +20,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class ProductServiceIntegrationTest {
+class ProductServiceIntegrationTest {
 
     @Autowired
     private ProductRepository productRepository;
 
     @Autowired
-    private ProductServiceImpl unitUnderTest;
+    private ProductService unitUnderTest;
 
     @BeforeEach
     void setup() {

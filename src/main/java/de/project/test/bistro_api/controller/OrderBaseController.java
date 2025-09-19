@@ -42,7 +42,7 @@ public interface OrderBaseController {
             ),
             @ApiResponse(
                     responseCode = "400",
-                    description = "The order is not in the required format",
+                    description = "The order is not in the required format or the quantity of an item is higher than the stock or an item does not exist",
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class))
             ),
             @ApiResponse(

@@ -15,7 +15,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-public class DiscountServiceUnitTest {
+class DiscountServiceUnitTest {
 
     @Spy
     private Order order;
@@ -25,13 +25,13 @@ public class DiscountServiceUnitTest {
     private AutoCloseable closeable;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         unitUnderTest = new DiscountService();
         closeable = MockitoAnnotations.openMocks(this);
     }
 
     @AfterEach
-    public void teardown() throws Exception {
+    void teardown() throws Exception {
         closeable.close();
     }
 
