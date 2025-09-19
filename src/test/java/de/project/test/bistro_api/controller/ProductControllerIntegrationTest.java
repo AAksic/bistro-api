@@ -33,7 +33,7 @@ public class ProductControllerIntegrationTest {
                 .port(applicationPort)
                 .log().all()
                 .when()
-                .get("/products/{id}", 1)
+                .get("/products/{id}", 1L)
                 .then()
                 .log().all()
                 .assertThat().statusCode(HttpStatus.OK.value())
@@ -51,7 +51,7 @@ public class ProductControllerIntegrationTest {
                 .port(applicationPort)
                 .log().all()
                 .when()
-                .get("/products/{id}", 1)
+                .get("/products/{id}", 1L)
                 .then()
                 .log().all()
                 .assertThat().statusCode(HttpStatus.NOT_FOUND.value())
@@ -78,25 +78,25 @@ public class ProductControllerIntegrationTest {
         assertThat(retrievedProducts).hasSize(4);
 
         Product first = retrievedProducts.getFirst();
-        assertEquals(1, first.getId());
+        assertEquals(1L, first.getId());
         assertEquals("Pizza", first.getName());
         assertEquals(BigDecimal.valueOf(10.25), first.getPrice());
         assertEquals(50, first.getStock());
 
         Product second = retrievedProducts.get(1);
-        assertEquals(2, second.getId());
+        assertEquals(2L, second.getId());
         assertEquals("Cola", second.getName());
         assertEquals(BigDecimal.valueOf(2.5), second.getPrice());
         assertEquals(200, second.getStock());
 
         Product third = retrievedProducts.get(2);
-        assertEquals(3, third.getId());
+        assertEquals(3L, third.getId());
         assertEquals("Water", third.getName());
         assertEquals(BigDecimal.valueOf(1.5), third.getPrice());
         assertEquals(1000, third.getStock());
 
         Product fourth = retrievedProducts.get(3);
-        assertEquals(4, fourth.getId());
+        assertEquals(4L, fourth.getId());
         assertEquals("Chicken Tikka Masala", fourth.getName());
         assertEquals(BigDecimal.valueOf(12.75), fourth.getPrice());
         assertEquals(15, fourth.getStock());

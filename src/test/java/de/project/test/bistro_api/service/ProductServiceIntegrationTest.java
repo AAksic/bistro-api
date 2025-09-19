@@ -35,9 +35,9 @@ public class ProductServiceIntegrationTest {
 
     @Test
     void getProductById_success() {
-        Product retrievedProduct = unitUnderTest.getProductById(1);
+        Product retrievedProduct = unitUnderTest.getProductById(1L);
 
-        assertEquals(1, retrievedProduct.getId());
+        assertEquals(1L, retrievedProduct.getId());
         assertEquals("Pizza", retrievedProduct.getName());
         assertEquals(BigDecimal.valueOf(10.25), retrievedProduct.getPrice());
         assertEquals(50, retrievedProduct.getStock());
@@ -47,7 +47,7 @@ public class ProductServiceIntegrationTest {
     void getProductById_failure_productWithIdDoesNotExist() {
         String expectedErrorMessage = "Product with id 500 does not exist";
 
-        ProductNotFoundException exception = assertThrows(ProductNotFoundException.class, () -> unitUnderTest.getProductById(500));
+        ProductNotFoundException exception = assertThrows(ProductNotFoundException.class, () -> unitUnderTest.getProductById(500L));
 
         assertEquals(expectedErrorMessage, exception.getMessage());
     }
@@ -59,25 +59,25 @@ public class ProductServiceIntegrationTest {
         assertThat(retrievedProducts).hasSize(4);
 
         Product first = retrievedProducts.getFirst();
-        assertEquals(1, first.getId());
+        assertEquals(1L, first.getId());
         assertEquals("Pizza", first.getName());
         assertEquals(BigDecimal.valueOf(10.25), first.getPrice());
         assertEquals(50, first.getStock());
 
         Product second = retrievedProducts.get(1);
-        assertEquals(2, second.getId());
+        assertEquals(2L, second.getId());
         assertEquals("Cola", second.getName());
         assertEquals(BigDecimal.valueOf(2.50).setScale(2, RoundingMode.UNNECESSARY), second.getPrice());
         assertEquals(200, second.getStock());
 
         Product third = retrievedProducts.get(2);
-        assertEquals(3, third.getId());
+        assertEquals(3L, third.getId());
         assertEquals("Water", third.getName());
         assertEquals(BigDecimal.valueOf(1.5).setScale(2, RoundingMode.UNNECESSARY), third.getPrice());
         assertEquals(1000, third.getStock());
 
         Product fourth = retrievedProducts.get(3);
-        assertEquals(4, fourth.getId());
+        assertEquals(4L, fourth.getId());
         assertEquals("Chicken Tikka Masala", fourth.getName());
         assertEquals(BigDecimal.valueOf(12.75), fourth.getPrice());
         assertEquals(15, fourth.getStock());

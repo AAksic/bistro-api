@@ -14,7 +14,7 @@ public class MockDataFactory {
 
     public static Product generateMockProduct() {
         return Product.builder()
-                .id(1)
+                .id(1L)
                 .name("Wiener Schnitzel")
                 .price(BigDecimal.valueOf(17.50))
                 .stock(35)
@@ -49,25 +49,25 @@ public class MockDataFactory {
     public static List<Product> generateMockProductsWithIds() {
         return List.of(
                 Product.builder()
-                        .id(1)
+                        .id(1L)
                         .name("Pizza")
                         .price(BigDecimal.valueOf(10.25))
                         .stock(50)
                         .build(),
                 Product.builder()
-                        .id(2)
+                        .id(2L)
                         .name("Cola")
                         .price(BigDecimal.valueOf(2.5))
                         .stock(200)
                         .build(),
                 Product.builder()
-                        .id(3)
+                        .id(3L)
                         .name("Water")
                         .price(BigDecimal.valueOf(1.5))
                         .stock(1000)
                         .build(),
                 Product.builder()
-                        .id(4)
+                        .id(4L)
                         .name("Chicken Tikka Masala")
                         .price(BigDecimal.valueOf(12.75))
                         .stock(15)
@@ -77,7 +77,7 @@ public class MockDataFactory {
 
     public static Order generateMockOrder() {
         return Order.builder()
-                .id(1)
+                .id(1L)
                 .orderDate(Instant.parse("2025-09-18T18:00:00.00Z"))
                 .build();
     }
@@ -86,7 +86,7 @@ public class MockDataFactory {
         return OrderRequest.builder()
                 .orderItems(List.of(
                         OrderItemRequest.builder()
-                                .productId(1)
+                                .productId(1L)
                                 .quantity(2)
                                 .build()
                 ))
@@ -99,7 +99,7 @@ public class MockDataFactory {
                         OrderItem.builder()
                                 .quantity(2)
                                 .product(Product.builder()
-                                        .id(1)
+                                        .id(1L)
                                         .build())
                                 .build()
                 ))
@@ -108,10 +108,10 @@ public class MockDataFactory {
 
     public static Order generateMockSavedOrder() {
         return Order.builder()
-                .id(1)
+                .id(1L)
                 .items(List.of(
                         OrderItem.builder()
-                                .id(1)
+                                .id(1L)
                                 .quantity(2)
                                 .product(Product.builder()
                                         .id(1)

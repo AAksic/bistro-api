@@ -63,11 +63,11 @@ class OrderServiceUnitTest {
         Order mockOrder = MockDataFactory.generateMockOrder();
         String expectedReceipt = MockDataFactory.generateMockReceipt();
 
-        when(orderRepository.findById(1L))
+        when(orderRepository.findById(eq(1L)))
                 .thenReturn(Optional.of(mockOrder));
-        when(discountService.apply(mockOrder))
+        when(discountService.apply(eq(mockOrder)))
                 .thenReturn(mockOrder);
-        when(orderFormatter.format(mockOrder))
+        when(orderFormatter.format(eq(mockOrder)))
                 .thenReturn(expectedReceipt);
 
         String orderReceipt = unitUnderTest.getOrderById(1L);

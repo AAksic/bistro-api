@@ -17,13 +17,13 @@ class OrderToReceiptFormatterIntegrationTest {
     @Test
     void format_success() {
         Order order = Order.builder()
-                .id(1)
+                .id(1L)
                 .build();
         order.setItems(
                 List.of(
                         OrderItem.builder()
-                                .id(1)
-                                .product(Product.builder().id(1).name("Pizza").price(BigDecimal.valueOf(10.25)).build())
+                                .id(1L)
+                                .product(Product.builder().id(1L).name("Pizza").price(BigDecimal.valueOf(10.25)).build())
                                 .order(order)
                                 .quantity(5)
                                 .build()
@@ -39,19 +39,19 @@ class OrderToReceiptFormatterIntegrationTest {
     @Test
     void format_success_multipleItems() {
         Order order = Order.builder()
-                .id(1)
+                .id(1L)
                 .build();
         order.setItems(
                 List.of(
                         OrderItem.builder()
-                                .id(1)
-                                .product(Product.builder().id(1).name("Pizza").price(BigDecimal.valueOf(10.25)).build())
+                                .id(1L)
+                                .product(Product.builder().id(1L).name("Pizza").price(BigDecimal.valueOf(10.25)).build())
                                 .order(order)
                                 .quantity(5)
                                 .build(),
                         OrderItem.builder()
-                                .id(2)
-                                .product(Product.builder().id(2).name("Cola").price(BigDecimal.valueOf(2.5)).build())
+                                .id(2L)
+                                .product(Product.builder().id(2L).name("Cola").price(BigDecimal.valueOf(2.5)).build())
                                 .order(order)
                                 .quantity(7)
                                 .build()

@@ -54,7 +54,7 @@ class OrderServiceIntegrationTest {
     void placeOrder_success() {
         OrderRequest orderRequest = OrderRequest.builder()
                 .orderItems(List.of(
-                                OrderItemRequest.builder().productId(1).quantity(2).build()
+                        OrderItemRequest.builder().productId(1L).quantity(2).build()
                         )
                 )
                 .build();
@@ -65,7 +65,7 @@ class OrderServiceIntegrationTest {
         assertThat(placedOrder.getItems()).hasSize(1);
 
         OrderItem first = placedOrder.getItems().getFirst();
-        assertEquals(1, first.getProduct().getId());
+        assertEquals(1L, first.getProduct().getId());
         assertEquals(2, first.getQuantity());
         assertEquals("Pizza", first.getProduct().getName());
         assertEquals(BigDecimal.valueOf(10.25), first.getProduct().getPrice());
@@ -78,7 +78,7 @@ class OrderServiceIntegrationTest {
         orderToSave.setItems(
                 List.of(
                         OrderItem.builder()
-                                .product(Product.builder().id(1).build())
+                                .product(Product.builder().id(1L).build())
                                 .order(orderToSave)
                                 .quantity(5)
                                 .build()
