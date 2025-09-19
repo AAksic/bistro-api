@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.ErrorResponse;
@@ -51,7 +52,7 @@ public interface OrderBaseController {
             )
     })
     @ResponseStatus(HttpStatus.CREATED)
-    Order placeOrder(@RequestBody OrderRequest orderRequest);
+    Order placeOrder(@RequestBody @Valid OrderRequest orderRequest);
 
 
     @GetMapping(
