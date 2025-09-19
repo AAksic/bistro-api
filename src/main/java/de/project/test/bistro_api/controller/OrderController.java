@@ -3,6 +3,7 @@ package de.project.test.bistro_api.controller;
 import de.project.test.bistro_api.domain.Order;
 import de.project.test.bistro_api.dto.OrderRequest;
 import de.project.test.bistro_api.service.OrderService;
+import de.project.test.bistro_api.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,10 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderController implements OrderBaseController {
 
     private final OrderService orderService;
+    private final ProductService productService;
 
     @Override
     public Order placeOrder(OrderRequest orderRequest) {
-        return orderService.placeOrder(orderRequest);
+        Order placedOrder = orderService.placeOrder(orderRequest);
+        productService.updateStock(orderRequest);
+
+        return placedOrder;
     }
 
     @Override
